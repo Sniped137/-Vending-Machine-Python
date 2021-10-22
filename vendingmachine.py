@@ -53,7 +53,7 @@ def input_money(item_name, item_price):
     money = True
     while money:
         money_inputted = int(input("Please Enter Change: "))
-        if money_inputted > item_price:
+        if money_inputted >= item_price:
             change = money_inputted - item_price
             print("Please Take Your Item: ", item_name)
             print("Please Take Your Change: ", change)
