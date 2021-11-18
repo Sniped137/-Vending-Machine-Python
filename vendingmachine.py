@@ -1,63 +1,42 @@
-machine_contents = {
-"Walkers Crisps" : 50, 
-"Cheetos Crisps" : 50, 
-"Cadbury's Chocolate" : 75, 
-"Milky Way Chocolate" : 80, 
-"Popping Candy" : 40, 
-"Skittles" : 60, 
-"Ham Sandwich" : 120, 
-"Cheese and Tomato Sandwich" : 140,
-"Can of Coke" : 95, 
-"Bottle of Water" : 150}
+#2D Array of 3 Values Per Array
+machine_names = [["A1" , "Walkers Crisps", 0.50], ["A2" , "Cheetos Crisps", 0.50], ["B1" , "Cadbury's Chocolate", 0.75],
+                ["B2" , "Milky Way Chocolate", 0.80], ["C1" , "Popping Candy", 0.40], ["C2" , "Skittles Candy", 0.60],
+                ["D1" , "Ham Sandwich", 1.20], ["D2" , "Cheese Sandwich", 1.40], ["E1" , "Bottle of Coke", 0.95], ["E2" , "Bottle of Water", 1.50]]
 
-machine_names = {
-"A1" : "Walkers Crisps", 
-"A2" : "Cheetos Crisps", 
-"B1" : "Cadbury's Chocolate", 
-"B2" : "Milky Way Chocolate", 
-"C1" : "Popping Candy", 
-"C2" : "Skittles", 
-"D1" : "Ham Sandwich", 
-"D2" : "Cheese and Tomato Sandwich",
-"E1" : "Can of Coke", 
-"E2" : "Bottle of Water"}
+#Creating a function for printing the array
+def get_table():
+    print("\n{:<10} {:<20} {:<10}\n".format("CODE", "ITEM", "PRICE"))  # Adds a Row at the Top with 10,20,10 space between
+    for value in machine_names: 
+        code, item, price = value 
+        print("{:<10} {:<20} £ {:<10}".format(code, item, price)) #Reformatting the code and printing it
+        
+#Function to iterate through and look for User_Choice
+def arrayiterate(user_choice):  
+    for i in machine_names:
+        if i[0] == user_choice:
+            return i
 
 def selection():
-    print("""
-         Welcome to the Vending Machine! \n
-         (A1): Walkers Crisps (50p) \n
-         (A2): Cheetos Crisps (50p) \n
-         (B1): Cadbury's Chocolate (75p) \n
-         (B2): Milky Way Chocolate (80p) \n
-         (C1): Popping Candy (40p) \n
-         (C2): Skittles (60p) \n
-         (D1): Ham Sandwich (120p) \n
-         (D2): Cheese and Tomato Sandwich (140p) \n
-         (E1): Can of Coke (95p) \n
-         (E2): Bottle of Water (150p)
-         """)
-
+    get_table()
     start = True
     while start:
-        user_choice = input("@:// ")
-        user_choice = user_choice.upper()
-        if user_choice in machine_names:
-            item_name = machine_names[user_choice]
-            item_price = machine_contents[item_name]
-            input_money(item_name, item_price)
-            start = False
-        else:
-            print("Selection Not Found , Please Try Again...")
-        
+        user_choice = input("@:// ").upper()
+        array_look = arrayiterate(user_choice) 
+        item_name = (array_look[1])
+        item_price = (array_look[2])
+        print(f"This Item ({item_name}) Costs: £ {item_price}")  
+        input_money(item_name, item_price)
+        start = False
+  
 def input_money(item_name, item_price):
     money = True
     while money:
-        money_inputted = int(input("Please Enter Change: "))
+        money_inputted = float(input("Please Enter Change (£ Format): "))
         if money_inputted >= item_price:
             change = money_inputted - item_price
             print("Please Take Your Item: ", item_name)
-            print("Please Take Your Change: ", change)
-            break
+            print("Please Take Your Change: £ {:.2f}".format(change))
+            money = False
         else:
             print("Change Amount is Too Low or Unknown")
 
